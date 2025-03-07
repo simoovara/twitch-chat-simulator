@@ -116,6 +116,32 @@ function clearChat()
     element.empty();
 }
 
+
+window.chat = function() {
+    var textfield = $("#textfield");
+    var element = $("#chattext");
+
+    if (textfield.val() != "") {
+        var message = $('<p></p>');
+        message.attr("class", "chatMessage");
+        message.append(getUserName());
+        message.append(": ");
+
+        var msgBody = textfield.val();
+        msgBody = replace_emotes(msgBody);
+
+        message.append(msgBody);
+
+        textfield.val("");
+
+        element.append(message);
+        scrollToBottom();
+        cutTopOfChat();
+    }
+}
+
+
+
 //writes the text of the input field into the chat with a random username
 function chat()
 {
@@ -172,8 +198,6 @@ function keepSpamming()
         setTimeout(function() {keepSpamming(); }, Math.floor(Math.random() * spamSpeed));
     }
 }
-
-
 
 //scrolls to the bottom of the chat
 function scrollToBottom()
