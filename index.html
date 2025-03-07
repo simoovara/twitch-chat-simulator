@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    
+    <meta name="description" content="A twitch chat simulator to go with your youtube videos.">
+    
+    
+    <!-- importing the jQuery library  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    <!-- importing my own javascript files -->
+    <script src="./index_files/twitchData.js"></script>
+    <script src="./index_files/twitch.js"></script>
+    
+    <!-- importing the styling -->
+    <link rel="stylesheet" type="text/css" href="./index_files/twitch.css">
+    <!-- sets the favicon -->
+    <link rel="icon" href="./index_files/assets/flarege.webp">
+    
+
+<title>Twitch chat simulator</title>
+</head>
+<body onload="init()">
+    <div id="notchat">
+        
+        <form onsubmit="return false">
+            <input type="text" id="youtubelink" placeholder="insert full youtube URL here">
+            
+            <input type="submit" id="videoButton" onclick="getVideo()" value="get video" onkeypress="checkForEnter(event)">
+        </form>
+        
+    </div>
+    
+    
+    
+    <div id="chat">
+        
+        <div id="aboveinput">
+            <div id="abovechat">
+                <p id="channelname" onclick="changeChannel()">flarege</p>
+            </div>
+        
+            <div id="chattext">
+            <p class="chatMessage"><span class="username" style="color: red;">de_QQ</span>: <img src="./index_files/LULW.png" alt="LULW"></p><p class="chatMessage"><span class="username" style="color: red;">universalmarshmellow41</span>: <img src="./index_files/LULW.png" alt="LULW"></p><p class="chatMessage"><span class="username" style="color: red;">extraTrump</span>: <img src="./index_files/KEKW.png" alt="KEKW"></p><p class="chatMessage"><span class="username" style="color: purple;">mamaexplosion</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: red;">olof_yolo113</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: rgb(64, 183, 181);">mamaShrek66</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: purple;">de_haha</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: green;">coolmeister9</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: rgb(64, 183, 181);">VACeric</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">universalzzzzz94</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: rgb(64, 183, 181);">NickKappa69</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: red;">dirtySniper28</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">Cptshotgun60</span>: <img src="./index_files/LUL.png" alt="LUL"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">the_DADDY</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: red;">coolexplosion</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: blue;">mamaQQ</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">funHD</span>: <img src="./index_files/LUL.png" alt="LUL"></p><p class="chatMessage"><span class="username" style="color: blue;">WizardxD</span>: <img src="./index_files/KEKW.png" alt="KEKW"></p><p class="chatMessage"><span class="username" style="color: blue;">niceQQ105</span>: <img src="./index_files/LULW.png" alt="LULW"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">insaneloser</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: red;">VACnoob</span>: <img src="./index_files/LUL.png" alt="LUL"></p><p class="chatMessage"><span class="username" style="color: green;">dirtyeric110</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">extra_yolo93</span>: <img src="./index_files/KEKW.png" alt="KEKW"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">CptShrek</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: red;">VAC000113</span>: <img src="./index_files/LULW.png" alt="LULW"></p><p class="chatMessage"><span class="username" style="color: red;">funShrek</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">devilDADDY</span>: <img src="./index_files/LULW.png" alt="LULW"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">BOTNut70</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"> <img src="./index_files/Clap.gif" alt="Clap"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">BOTNut</span>: <img src="./index_files/OMEGALUL.png" alt="OMEGALUL"></p><p class="chatMessage"><span class="username" style="color: rgb(170, 153, 41);">daddyzzzzz45</span>: <img src="./index_files/KEKW.png" alt="KEKW"></p><p class="chatMessage"><span class="username" style="color: purple;">extrapepe</span>: <img src="./index_files/LUL.png" alt="LUL"></p><p class="chatMessage"><span class="username" style="color: green;">iAmShrek</span>: <img src="./index_files/LUL.png" alt="LUL"></p></div>
+        </div>
+        
+        <div id="input">
+            <form onsubmit="return false">
+                <input type="text" id="textfield" placeholder="send a message">
+                
+            
+                <input type="submit" id="chatButton" onclick="chat()" value="Chat" onkeypress="checkForEnter(event)">
+            </form>
+            
+            
+            <button id="settingsButton" onclick="toggleSettings()" style="background-color: rgb(100, 65, 164);">settings</button>
+            
+        </div>
+    <div id="settings" style="display: none;"><button onclick="clearChat()">clear</button><br><button onclick="spam()" id="spamButton">stop spamming</button><br><button onclick="darkmode()">toggle dark mode</button><h3>type of spam</h3><select id="selectspamtype" onchange="chooseSpam()"><option value="laughing">Laughing</option><option value="positive">Positive (CS)</option><option value="negative">Negative (CS)</option><option value="bobross">Bob Ross</option><option value="spam">Spam</option></select><h3>speed</h3><input type="range" id="selectspeed" onchange="chooseSpeed()"></div></div>
+    
+    
+
+</body></html>
