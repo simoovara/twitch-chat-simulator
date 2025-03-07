@@ -9,7 +9,7 @@ function init()
 {
     makeSettings();
     toggleSettings();
-    // spam();
+    spam();
 }
 
 
@@ -323,35 +323,6 @@ function chooseSpeed()
 {
     var val = $("#selectspeed").val();
     spamSpeed = 2200 - (20 * val);
-}
-
-
-function getVideo()
-{
-    var link  = $("#youtubelink").val();
-    link = link.replace("watch?v=", "embed/");
-    link = link + "?autoplay=1";
-
-    var notChat = $("#notchat");
-    notChat.empty();
-
-    var video = $('<iframe></iframe>');
-    video.attr("src", link);
-    video.attr("id", "ytplayer");
-    video.attr("type", "text/html");
-    video.attr("frameborder", "0");
-    video.attr("width", "100%");
-    video.attr("height", "100%");
-    video.css("z-index", "100");
-
-    var errormsg = $('<p></p>');
-    errormsg.append("can't see the video?");
-    errormsg.append("<p></p>");
-    errormsg.append("write a full youtube link with the form: https://www.youtube.com/watch?v=[VIDEO CODE HERE]");
-    errormsg.attr("id", "errormsg");
-
-    notChat.append(errormsg);
-    notChat.append(video);
 }
 
 

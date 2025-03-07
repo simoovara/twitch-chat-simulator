@@ -1,13 +1,12 @@
-#chat
-{
+#chat {
     background-color: #ffffff;
     position: fixed;
     min-width: 270px;
     width: 20%;
-    height: 100%;
-
-    right: 0px;
-    top: 0px;
+    height: 100vh;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
 }
 
 #abovechat
