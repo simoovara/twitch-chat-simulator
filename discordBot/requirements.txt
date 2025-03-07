@@ -1,0 +1,5 @@
+discord.py-self==2.0.1
+dotenv==0.9.9
+pynput==1.8.0
+python-dotenv==1.0.1
+websocket-client==1.8.0

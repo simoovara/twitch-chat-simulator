@@ -1,5 +1,14 @@
 {
   "dependencies": {
     "ws": "^8.18.1"
+  },
+  "scripts": {
+    "start:wsServer": "node ./index_files/wsServer.js",
+    "start:discordBot": "python ./discordBot/bot.py",
+    "install:pythonDeps": "pip install -r ./discordBot/requirements.txt",
+    "start": "concurrently \"npm run start:wsServer\" \"npm run start:discordBot\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   }
 }
