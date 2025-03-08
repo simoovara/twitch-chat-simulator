@@ -22,13 +22,17 @@ python -m venv .venv
 ```bash
 .venv\Scripts\activate
 ```
+9. Install dependencies in package.json
+```bash
+npm install
+```
 
-9. Assuming you setup everything correctly, you should be able to run the following command to install the required packages
+10. Assuming you setup everything correctly, you should be able to run the following command to install the required packages
 ```bash
 npm run install:pythonDeps
 ```
 
-10. Run the project, this will run the discord bot and the websocket server
+11. Run the project, this will run the discord bot and the websocket server
 ```bash
 npm run start
 ```
