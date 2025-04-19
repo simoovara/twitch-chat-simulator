@@ -9,7 +9,7 @@ ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
 
         $("#textfield").val(data.messageContent);
-        chat();
+        chat(data.highlight);
     } catch (error) {
         console.error('Error parsing JSON:', error);
     }

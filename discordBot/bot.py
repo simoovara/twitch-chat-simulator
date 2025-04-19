@@ -59,14 +59,15 @@ def check_for_blacklisted(author_id):
 @bot.event
 async def on_message(message):
     global ws
+    is_highlight = False
     if message.author == bot.user:
         return
 
     is_flare_mentioned = str(FLARE_ID) in message.content
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
 
-    if not is_flare_mentioned and not is_dm_channel:
-        return
+    if is_flare_mentioned or is_dm_channel:
+        is_highlight = True
 
     if check_for_blacklisted(message.author.id):
         return
@@ -81,6 +82,7 @@ async def on_message(message):
         "type": "message",
         "messageContent": content,
         "author": message.author.name,
+        "highlight": is_highlight,
     }
     ws.send(json.dumps(data))
 

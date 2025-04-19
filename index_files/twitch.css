@@ -9,6 +9,17 @@
     top: 0;
 }
 
+.chatMessageHighlight {
+    background-color: rgba(169, 105, 233, 60%);
+    padding: 7px; /* Add padding equal to the previous margin */
+    margin: 0; /* Remove margin */
+}
+
+.chatMessageHighlight p {
+    margin: 0; /* Remove inner element margins */
+    padding: 0; /* Reset padding */
+}
+
 #abovechat
 {
     position: relative;

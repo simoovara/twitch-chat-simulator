@@ -57,7 +57,7 @@ function replace_emotes(message)
 
     for (var i=0;i<emotes.length;i++)
     {
-        message = message.replace(new RegExp(" " + emotes[i][0] + " ", 'g'), " <img src='pics/twitch_emotes/"+emotes[i][1]+"' alt='"+emotes[i][0]+"'> ");
+        message = message.replace(new RegExp("\\b" + emotes[i][0] + "\\b", 'g'), " <img src='index_files/assets/emotes/" + emotes[i][1] + "' alt='" + emotes[i][0] + "'> ");
     }
 
     message = message.slice(1, -1); //remove the added spaces
@@ -117,33 +117,12 @@ function clearChat()
 }
 
 
-window.chat = function() {
-    var textfield = $("#textfield");
-    var element = $("#chattext");
-
-    if (textfield.val() != "") {
-        var message = $('<p></p>');
-        message.attr("class", "chatMessage");
-        message.append(getUserName());
-        message.append(": ");
-
-        var msgBody = textfield.val();
-        msgBody = replace_emotes(msgBody);
-
-        message.append(msgBody);
-
-        textfield.val("");
-
-        element.append(message);
-        scrollToBottom();
-        cutTopOfChat();
-    }
-}
+window.chat = chat;
 
 
 
 //writes the text of the input field into the chat with a random username
-function chat()
+function chat(highlight)
 {
     var textfield = $("#textfield");
     var element = $("#chattext");
@@ -151,7 +130,10 @@ function chat()
     if(textfield.val()!="")
     {
         var message = $('<p></p>');
-        message.attr("class", "chatMessage");
+        if (highlight)
+            message.attr("class", "chatMessageHighlight");
+        else
+            message.attr("class", "chatMessage");
         message.append(getUserName());
         message.append(": ");
 
