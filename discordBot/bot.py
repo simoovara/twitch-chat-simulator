@@ -65,6 +65,10 @@ async def on_message(message):
 
     is_flare_mentioned = str(FLARE_ID) in message.content
     is_dm_channel = isinstance(message.channel, discord.DMChannel)
+    is_vcathon_channel = message.channel.id == 1332431502918549515:
+
+    if not is_vcathon_channel and not is_dm_channel:
+        return
 
     if is_flare_mentioned or is_dm_channel:
         is_highlight = True
