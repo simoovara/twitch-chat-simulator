@@ -47,7 +47,7 @@ def remove_pings(content):
 def remove_discord_emojis(content):
     content = re.sub(r"\[.+\]\(.+\)", "", content).strip()  # removes FakeNitro emojis (and every other hyperlink but oh well)
     content = re.sub(r"<a?:", "", content).strip()
-    return re.sub(r":\d+", "", content).strip()
+    return re.sub(r":\d+>", "", content).strip()
 
 
 def check_for_commands(content):
@@ -84,6 +84,7 @@ async def on_message(message):
         return
 
     content = remove_pings(message.content)
+    content = remove_discord_emojis(content)
     toggle = check_for_commands(content)
     if toggle and is_flare_mentioned:
         keyboard.press(model_toggles[toggle])
