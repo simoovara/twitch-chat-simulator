@@ -122,7 +122,7 @@ window.chat = chat;
 
 
 //writes the text of the input field into the chat with a random username
-function chat(highlight)
+function chat(highlight, userName)
 {
     var textfield = $("#textfield");
     var element = $("#chattext");
@@ -134,7 +134,8 @@ function chat(highlight)
             message.attr("class", "chatMessageHighlight");
         else
             message.attr("class", "chatMessage");
-        message.append(getUserName());
+        console.log(userName.text())
+        message.append(userName.text() === "" ? getUserName() : userName);
         message.append(": ");
 
         var msgBody = textfield.val();

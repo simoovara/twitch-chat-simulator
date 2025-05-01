@@ -43,6 +43,13 @@ async def on_ready():
 def remove_pings(content):
     return re.sub(r"<@?\d+>", "", content).strip()
 
+
+def remove_discord_emojis(content):
+    content = re.sub(r"\[.+\]\(.+\)", "", content).strip()  # removes FakeNitro emojis (and every other hyperlink but oh well)
+    content = re.sub(r"<a?:", "", content).strip()
+    return re.sub(r":\d+", "", content).strip()
+
+
 def check_for_commands(content):
     cmds = list(model_toggles.keys())
     try:
@@ -78,14 +85,14 @@ async def on_message(message):
 
     content = remove_pings(message.content)
     toggle = check_for_commands(content)
-    if toggle:
+    if toggle and is_flare_mentioned:
         keyboard.press(model_toggles[toggle])
         keyboard.release(model_toggles[toggle])
 
     data = {
         "type": "message",
         "messageContent": content,
-        "author": message.author.name,
+        "author": message.author.display_name if not is_dm_channel else None,
         "highlight": is_highlight,
     }
     ws.send(json.dumps(data))
