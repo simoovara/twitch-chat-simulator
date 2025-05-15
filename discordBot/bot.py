@@ -1,6 +1,7 @@
 import json
 import discord
 import re
+import asyncio
 
 from discord.ext import commands
 from dotenv import dotenv_values
@@ -19,7 +20,8 @@ FLARE_ID = 473216418851192853
 SIMO_ID = 711625207361830912
 bot = commands.Bot(command_prefix="flarege:", help_command=None, owner_ids=[FLARE_ID, SIMO_ID])
 
-
+model_lock = False
+model_unlock_task = None
 model_toggles = {
     "!on": Key.f13,
     "!off": Key.f14,
@@ -63,6 +65,12 @@ def check_for_blacklisted(author_id):
         return author_id in file.readlines()
 
 
+async def unlock_model():
+    global model_lock
+    await asyncio.sleep(15 * 60)  # 15 minutes in seconds
+    model_lock = False
+
+
 @bot.event
 async def on_message(message):
     global ws
@@ -77,6 +85,18 @@ async def on_message(message):
     if not is_vcathon_channel and not is_dm_channel:
         return
 
+    if message.author.id == 1332511728323526686:  # whisper message
+        # scuffed but i dont wanna use regex
+        if "by <@473216418851192853>" in message.content:
+           if "model lock (15 mins)" in message.content:
+               model_lock = True
+               if model_unlock_task and not model_unlock_task.done():
+                   model_unlock_task.cancel()
+
+               model_unlock_task = asyncio.create_task(unlock_model)
+
+
+
     if is_flare_mentioned or is_dm_channel:
         is_highlight = True
 
@@ -86,7 +106,7 @@ async def on_message(message):
     content = remove_pings(message.content)
     content = remove_discord_emojis(content)
     toggle = check_for_commands(content)
-    if toggle and is_flare_mentioned:
+    if toggle and is_flare_mentioned and not model_lock:
         keyboard.press(model_toggles[toggle])
         keyboard.release(model_toggles[toggle])
 

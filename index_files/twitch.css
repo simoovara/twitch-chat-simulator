@@ -119,6 +119,21 @@
 }
 
 
+#clearButton
+{
+    position: absolute;
+    height: 30%;
+    width: 15%;
+
+    left: 2.5%;
+    top: 60%;
+
+    background-color: #6441a4;
+    color: white;
+    border: none;
+}
+
+
 #settingsButton
 {
     position: absolute;

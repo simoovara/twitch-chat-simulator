@@ -1,57 +1,15 @@
-var spamming = false;
 var darkMode = false;
-var spamType = "laughing";
-var spamSpeed = 1200;
 
 
 //is called automatically when the html page is loaded
 function init()
 {
-    makeSettings();
-    toggleSettings();
-    spam();
+    // meow
 }
 
 
-//writes a random message in the chat
-function writeMessage()
-{
-    var element = $("#chattext");
-    element.append(getMessage());
-    cutTopOfChat();
-    scrollToBottom();
-}
 
-//returns a random message
-function getMessage()
-{
-    var message = $('<p></p>');
-    message.attr("class", "chatMessage");
-    message.append(getUserName());
-    message.append(": ");
-
-    var msgBody = "";
-
-    if(spamType=="positive")
-        msgBody = (positiveMessages[Math.floor(Math.random()*positiveMessages.length)]);
-    else if(spamType=="negative")
-        msgBody = (negativeMessages[Math.floor(Math.random()*negativeMessages.length)]);
-    else if(spamType=="bobross")
-        msgBody = (bobRossMessages[Math.floor(Math.random()*bobRossMessages.length)]);
-    else if(spamType=="laughing")
-        msgBody = (laughingMessages[Math.floor(Math.random()*laughingMessages.length)]);
-    else if(spamType=="spam")
-        msgBody = (spamMessages[Math.floor(Math.random()*spamMessages.length)]);
-
-    msgBody = replace_emotes(msgBody);
-
-    message.append(msgBody);
-
-    return message;
-}
-
-
-function replace_emotes(message)
+function replaceEmotes(message)
 {
     message = " " + message + " "; //add space before and after
 
@@ -127,19 +85,23 @@ function chat(highlight, userName)
     var textfield = $("#textfield");
     var element = $("#chattext");
 
-    if(textfield.val()!="")
-    {
+    if(textfield.val()!=="") {
         var message = $('<p></p>');
         if (highlight)
             message.attr("class", "chatMessageHighlight");
         else
             message.attr("class", "chatMessage");
-        console.log(userName.text())
-        message.append(userName.text() === "" ? getUserName() : userName);
-        message.append(": ");
+        if (userName !== undefined) {
+            message.append(userName.text() === "" ? getUserName() : userName);
+            message.append(": ");
+        }
+        else {
+            message.append(getUserName());
+            message.append(": ");
+        }
 
         var msgBody = textfield.val();
-        msgBody = replace_emotes(msgBody);
+        msgBody = replaceEmotes(msgBody);
 
         message.append(msgBody);
 
@@ -148,37 +110,6 @@ function chat(highlight, userName)
         element.append(message);
         scrollToBottom();
         cutTopOfChat();
-    }
-}
-
-
-//starts spamming, calls keepSpamming()
-function spam()
-{
-    var spamButton = $("#spamButton");
-    spamButton.empty();
-
-    if(spamming)
-    {
-        spamming = false;
-        spamButton.append("spam");
-    }
-    else
-    {
-        spamming = true;
-        keepSpamming();
-        spamButton.append("stop spamming");
-    }
-}
-
-
-//recursive function that writes a message every 0-249ms
-function keepSpamming()
-{
-    if(spamming)
-    {
-        writeMessage();
-        setTimeout(function() {keepSpamming(); }, Math.floor(Math.random() * spamSpeed));
     }
 }
 
@@ -228,109 +159,6 @@ function darkmode()
     }
 }
 
-
-//makes a "settings" box
-function makeSettings()
-{
-    $("#settingsButton").css("background-color", "#4b2f7f");
-
-    var settings = $('<div></div>');
-    settings.attr("id", "settings");
-
-
-    var clearButton = $('<button></button>');
-    clearButton.append("clear");
-    clearButton.attr("onClick", "clearChat()");
-
-
-    var spamButton = $('<button></button>');
-    if(spamming)
-    {
-        spamButton.append("stop spamming");
-    }
-    else
-    {
-        spamButton.append("spam");
-    }
-    spamButton.attr("onclick", "spam()");
-    spamButton.attr("id", "spamButton");
-
-    var darkModeButton = $('<button></button>');
-    darkModeButton.append("toggle dark mode");
-    darkModeButton.attr("onclick", "darkmode()");
-
-    var selectSpam = $('<select><select>');
-    selectSpam.attr("id", "selectspamtype");
-    selectSpam.attr("onChange", "chooseSpam()");
-
-    var positiveSpam = $('<option></option>');
-    positiveSpam.attr("value", "positive");
-    positiveSpam.append("Positive (CS)");
-    var negativeSpam = $('<option></option>');
-    negativeSpam.attr("value", "negative");
-    negativeSpam.append("Negative (CS)");
-    var bobRossSpam = $('<option></option>');
-    bobRossSpam.attr("value", "bobross");
-    bobRossSpam.append("Bob Ross");
-    var laughingSpam = $('<option></option>');
-    laughingSpam.attr("value", "laughing");
-    laughingSpam.append("Laughing");
-    var spamSpam = $('<option></option>');
-    spamSpam.attr("value", "spam");
-    spamSpam.append("Spam");
-
-    selectSpam.append(laughingSpam);
-    selectSpam.append(positiveSpam);
-    selectSpam.append(negativeSpam);
-    selectSpam.append(bobRossSpam);
-    selectSpam.append(spamSpam);
-
-
-    var selectSpeed = $('<input></input>');
-    selectSpeed.attr("type", "range");
-    selectSpeed.attr("id", "selectspeed");
-    selectSpeed.attr("onchange", "chooseSpeed()");
-
-
-    settings.append(clearButton);
-    settings.append("<br>");
-    settings.append(spamButton);
-    settings.append("<br>");
-    settings.append(darkModeButton);
-    settings.append($('<h3></h3>').append("type of spam"));
-    settings.append(selectSpam);
-    settings.append($('<h3></h3>').append("speed"));
-    settings.append(selectSpeed);
-
-    var chat = $("#chat");
-    chat.append(settings);
-}
-
-//shows or hides the chat
-function toggleSettings() {
-    var settings = $("#settings");
-    var settingsButton = $("#settingsButton");
-
-    if (settings.length) {
-        settings.toggle();
-        settingsButton.css("background-color",
-            settings.is(":visible") ? "#4b2f7f" : "#6441a4"
-        );
-    }
-}
-
-//sets the type of spam from the input in the settings
-function chooseSpam()
-{
-    spamType = $("#selectspamtype").val();
-}
-
-//sets the speed from the input in the settings
-function chooseSpeed()
-{
-    var val = $("#selectspeed").val();
-    spamSpeed = 2200 - (20 * val);
-}
 
 
 //gives the user an input field to change the name of the channel
