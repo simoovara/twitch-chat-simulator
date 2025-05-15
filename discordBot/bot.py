@@ -73,7 +73,7 @@ async def unlock_model():
 
 @bot.event
 async def on_message(message):
-    global ws
+    global ws, model_lock, model_unlock_task
     is_highlight = False
     if message.author == bot.user:
         return
