@@ -100,7 +100,7 @@ async def on_message(message):
                    obs_ws.send_reset_timer()
                    model_unlock_task.cancel()
 
-               model_unlock_task = asyncio.create_task(unlock_model)
+               model_unlock_task = asyncio.create_task(unlock_model())
 
 
 
