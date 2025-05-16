@@ -7,6 +7,7 @@ from discord.ext import commands
 from dotenv import dotenv_values
 from websocket import create_connection, WebSocket
 from pynput.keyboard import Key, Controller, KeyCode
+from obs_websocket_client import OBSWebsocket
 
 keyboard = Controller()
 # for some reason pynput doesnt have these defined
@@ -37,6 +38,7 @@ model_toggles = {
 
 
 ws: WebSocket = create_connection("ws://localhost:8080")
+obs_ws = OBSWebsocket(config["OBS_WS_IP"], 4455)
 @bot.event
 async def on_ready():
     print(f"Bot is ready. Logged in as {bot.user}")
@@ -67,8 +69,10 @@ def check_for_blacklisted(author_id):
 
 async def unlock_model():
     global model_lock
+    obs_ws.send_start_timer()
     await asyncio.sleep(15 * 60)  # 15 minutes in seconds
     model_lock = False
+    obs_ws.send_reset_timer()
 
 
 @bot.event
@@ -91,6 +95,8 @@ async def on_message(message):
            if "model lock (15 mins)" in message.content:
                model_lock = True
                if model_unlock_task and not model_unlock_task.done():
+                   obs_ws.send_pause_timer()
+                   obs_ws.send_reset_timer()
                    model_unlock_task.cancel()
 
                model_unlock_task = asyncio.create_task(unlock_model)
