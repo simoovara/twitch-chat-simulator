@@ -4,7 +4,7 @@
   },
   "scripts": {
     "start:wsServer": "node ./index_files/wsServer.js",
-    "start:discordBot": "python ./discordBot/bot.py",
+    "start:discordBot": "cd discordBot && .\\.venv\\Scripts\\python bot.py",
     "install:pythonDeps": "pip install -r ./discordBot/requirements.txt",
     "start": "concurrently \"npm run start:wsServer\" \"npm run start:discordBot\""
   },
