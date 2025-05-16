@@ -31,10 +31,7 @@ class OBSWebsocket:
             }
         }
 
-        self.ws.send(json.dumps(message))
-        res = self.ws.recv()
-        print(f"Received response: {res}")
-        return res
+        self.send_message(message)
 
     def send_pause_timer(self):
         message = {
@@ -49,10 +46,7 @@ class OBSWebsocket:
             }
         }
 
-        self.ws.send(json.dumps(message))
-        res = self.ws.recv()
-        print(f"Received response: {res}")
-        return res
+        self.send_message(message)
 
     def send_reset_timer(self):
         message = {
@@ -67,7 +61,4 @@ class OBSWebsocket:
             }
         }
 
-        self.ws.send(json.dumps(message))
-        res = self.ws.recv()
-        print(f"Received response: {res}")
-        return res
+        self.send_message(message)
