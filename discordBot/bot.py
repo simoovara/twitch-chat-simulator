@@ -2,6 +2,7 @@ import json
 import discord
 import re
 import asyncio
+import time
 
 from discord.ext import commands
 from dotenv import dotenv_values
@@ -113,8 +114,12 @@ async def on_message(message):
     content = remove_discord_emojis(content)
     toggle = check_for_commands(content)
     if toggle and is_flare_mentioned and not model_lock:
+        keyboard.press(Key.ctrl_l)
+        time.sleep(0.1)
         keyboard.press(model_toggles[toggle])
+        time.sleep(0.1)
         keyboard.release(model_toggles[toggle])
+        keyboard.release(Key.ctrl_l)
 
     data = {
         "type": "message",
