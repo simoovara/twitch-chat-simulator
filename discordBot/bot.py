@@ -97,6 +97,7 @@ async def on_message(message):
                model_lock = True
                if model_unlock_task and not model_unlock_task.done():
                    obs_ws.send_pause_timer()
+                   time.sleep(0.3)
                    obs_ws.send_reset_timer()
                    model_unlock_task.cancel()
 
