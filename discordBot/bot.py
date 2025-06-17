@@ -93,7 +93,7 @@ async def on_message(message):
     if message.author.id == 1332511728323526686:  # whisper message
         # scuffed but i dont wanna use regex
         if "by <@473216418851192853>" in message.content:
-           if "model lock (15 mins)" in message.content:
+           if "model lock + thigh cam (optional)" in message.content:
                model_lock = True
                if model_unlock_task and not model_unlock_task.done():
                    obs_ws.send_pause_timer()
